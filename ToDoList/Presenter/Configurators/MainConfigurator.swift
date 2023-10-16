@@ -16,7 +16,7 @@ class MainConfigurator {
         let presenter = PresenterList()
         vc.presenter = presenter
         presenter.view = vc
-        vc.delegate = showMenuDelegate // Set the delegate to the provided instance
+        vc.delegate = showMenuDelegate 
         return vc
     }
 }

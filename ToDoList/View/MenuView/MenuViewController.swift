@@ -13,14 +13,11 @@ class MenuViewController: UIViewController,ViewListProtocol {
    
     var presenter:PresenterListProtocol?
     
-    
     lazy var tableViewButtons:UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.backgroundColor = .clear
         table.separatorStyle = .none
-        
-
         return table
     }()
     
@@ -48,11 +45,9 @@ class MenuViewController: UIViewController,ViewListProtocol {
         ])
     }
     
-    
     func reloadData() {
         
     }
-    
 
 }
 

@@ -9,8 +9,6 @@ import UIKit
 
 class ContainerViewController: UIViewController,ShowMenuProtocol {
     
-    
-    
     var controller: UIViewController!
     var menuViewController: UIViewController!
     var bool:Bool = false
@@ -20,8 +18,6 @@ class ContainerViewController: UIViewController,ShowMenuProtocol {
         configureListVC()
     }
     
-
-    
     func configureListVC(){
         let listVC = MainConfigurator.config(showMenuDelegate: self)
    
@@ -29,9 +25,7 @@ class ContainerViewController: UIViewController,ShowMenuProtocol {
         view.addSubview(controller.view)
         addChild(controller)
     }
-    
-  
-    
+        
     func configureMenuVC(){
         if menuViewController == nil{
             

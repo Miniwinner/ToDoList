@@ -13,7 +13,7 @@ import CoreData
 
 class CoreDataService {
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "ListModel") // Замените "YourModelName" на имя вашей Core Data модели
+        let container = NSPersistentContainer(name: "ListModel") 
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error {
                 fatalError("Core Data error: \(error)")
