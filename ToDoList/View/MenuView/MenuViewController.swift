@@ -17,7 +17,7 @@ class MenuViewController: UIViewController,ViewListProtocol {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.backgroundColor = .clear
-        table.separatorStyle = .none
+        table.separatorStyle = .singleLine
         return table
     }()
     
@@ -55,7 +55,15 @@ extension MenuViewController:UITableViewDelegate,UITableViewDataSource{
     
    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
+        switch indexPath.section{
+        case 0:presenter?.refreshSelect(select: .All)
+            print("tap0")
+        case 1:presenter?.refreshSelect(select: .Done)
+            print("tap2")
+        case 2:presenter?.refreshSelect(select: .Fav)
+            print("tap3")
+        default:break
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

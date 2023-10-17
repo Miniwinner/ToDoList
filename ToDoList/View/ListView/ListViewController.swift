@@ -22,12 +22,11 @@ class ListViewController: UIViewController,ViewListProtocol {
     
     var delegate:ShowMenuProtocol?
     
+    
     lazy var tableViewList:UITableView = {
         let collection = UITableView()
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.backgroundColor = .clear
-        //collection.isEditing = true
-        //collection.isUserInteractionEnabled = true
         return collection
     }()
     
@@ -66,13 +65,6 @@ class ListViewController: UIViewController,ViewListProtocol {
         return alert
     }()
 
-    func reloadData() {
-        DispatchQueue.main.async {
-            self.tableViewList.reloadData()
-        }
-    }
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.didLoad()
@@ -89,6 +81,8 @@ class ListViewController: UIViewController,ViewListProtocol {
         delegate?.toogleMenu()
     }
     
+//
+    
     func setupUI(){
         view.backgroundColor = .white
 
@@ -104,6 +98,12 @@ class ListViewController: UIViewController,ViewListProtocol {
         view.addSubview(buttonAdd)
         
         view.addSubview(buttonMenu)
+    }
+    
+    func reloadData() {
+        DispatchQueue.main.async {
+            self.tableViewList.reloadData()
+        }
     }
     
     func configLayout(){
@@ -161,6 +161,23 @@ extension ListViewController:UITableViewDelegate,UITableViewDataSource{
         } else {
             cell.setupColor(color: UIColor(red: 0.94, green: 0.96, blue: 0.97, alpha: 1.00))
         }
+        
+//        guard let model = self.presenter?.notes, indexPath.section < model.count else { return UITableViewCell() }
+//        guard let modelDone = self.presenter?.doneNotes, indexPath.section < modelDone.count else { return UITableViewCell() }
+//        guard let modelFav = self.presenter?.favouriteNotes, indexPath.section < modelFav.count else { return UITableViewCell() }
+//
+//        switch presenter?.selectedGroup {
+//        case .All:
+//            cell.configUIData(with: model[indexPath.section])
+//        case .Done:
+//            cell.configUIData(with: modelDone[indexPath.section])
+//        case .Fav:
+//            cell.configUIData(with: modelFav[indexPath.section])
+//        default:
+//            break
+//        }
+
+
         
         guard let model = self.presenter?.notes else { return UITableViewCell() }
 

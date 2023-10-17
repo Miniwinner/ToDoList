@@ -8,11 +8,13 @@
 import Foundation
 import CoreData
 
-    
+
 protocol PresenterListProtocol {
     
     var rowModels:[Note] { get set }
     var notes:[Note] { get set }
+    var doneNotes: [Note] { get set }
+    var favouriteNotes: [Note] { get set }
     var buttons: [Image] { get set }
     var selectedGroup: DataConfig { get set }
     func addNote(note: String)
@@ -20,6 +22,8 @@ protocol PresenterListProtocol {
     func removeNoteAtIndex(index: Int)
     
     func changeIsDone(bool: Bool, id: Int)
+    
+    func refreshSelect(select:DataConfig)
     
     func refreshList()
     
@@ -37,38 +41,43 @@ protocol PresenterListProtocol {
 
 class PresenterList: PresenterListProtocol {
     
-    
-   
-    
     var rowModels:[Note] = []
     
+    var doneNotes: [Note] = []
+    var favouriteNotes: [Note] = []
+
+    var notes:[Note] = []
+
     var selectedGroup: DataConfig = .All
     
-    var maxId: Int = 0 
-
+    var maxId: Int = 0
     
-    var notes:[Note] = []
     
     var buttons:[Image] = [Image(image: "Done", text: "Favorite"),Image(image: "taskDone", text: "Done"),Image(image: "None", text: "All")]
     
     var coreDataService = CoreDataService()
-
+    
     
     weak var view: ViewListProtocol?
+    
+    
     
     func addNote(note: String) {
         maxId += 1
         
         coreDataService.addTask(text: note, isFavourite: false, id: maxId, isDone: false)
-      
+        
         update()
     }
-
+    
     func didLoad(){
         update()
     }
-
-
+    
+    func refreshSelect(select:DataConfig){
+        selectedGroup = select
+        refreshList()
+    }
     
     private func update() {
         guard let dataModels = coreDataService.fetchList() else { return }
@@ -81,11 +90,12 @@ class PresenterList: PresenterListProtocol {
                 isDone: model.isDone
             )
         })
-        
+        doneNotes = rowModels.filter { $0.isDone }
+        favouriteNotes = rowModels.filter { $0.isFavourite }
         notes = rowModels
         view?.reloadData()
     }
-
+    
     
     func removeNoteAtIndex(index: Int) {
         let notess = coreDataService.getAllTasks()
@@ -103,11 +113,11 @@ class PresenterList: PresenterListProtocol {
     func changeIsFavorite(bool: Bool, id: Int) {
         coreDataService.changeIsFavorite(id: id, isFavorite: bool)
     }
-
+    
     func changeIsDone(bool: Bool, id: Int) {
         coreDataService.changeIsDone(id: id, isDone: bool)
     }
-
+    
     
     func refreshList() {
         view?.reloadData()
